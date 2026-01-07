@@ -208,6 +208,12 @@ const Hero = () => {
   const [logoConfig, setLogoConfig] = useState(() => 
     getInitialData('logo', LOGO_CONFIG)
   )
+  const [heroButtons, setHeroButtons] = useState(() => 
+    getInitialData('heroButtons', [
+      { text: 'KEŞFET', link: '#about', style: 'primary' },
+      { text: 'İÇERİKLER', link: '#trcs', style: 'secondary' }
+    ])
+  )
 
   useEffect(() => {
     const loadHeroData = () => {
@@ -217,6 +223,7 @@ const Hero = () => {
           const data = JSON.parse(saved)
           if (data.heroBanner) setHeroBanner(data.heroBanner)
           if (data.logo) setLogoConfig(data.logo)
+          if (data.heroButtons) setHeroButtons(data.heroButtons)
         } catch (e) {
           console.error('Error loading hero data:', e)
         }
@@ -239,62 +246,91 @@ const Hero = () => {
   }, [])
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
+    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden bg-black">
+      {/* Background Image - Right Side */}
       <div className="absolute inset-0 z-0">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 md:left-1/2 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${heroBanner})`,
-            filter: 'brightness(0.15) blur(2px)'
+            filter: 'brightness(0.6)'
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bg-dark/70 to-bg-dark" />
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Gradient Overlay from Left */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent md:to-black/30" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6">
-        <div className="mb-6 flex justify-center items-center">
-          {logoConfig.url ? (
-            <img 
-              src={logoConfig.url} 
-              alt="Arhaval Esports Logo"
-              className="object-contain"
-              style={{ 
-                width: logoConfig.hero?.width || 300, 
-                height: logoConfig.hero?.height || 100,
-                maxWidth: '100%'
-              }}
-              onError={(e) => {
-                e.target.style.display = 'none'
-                if (logoConfig.showTextFallback) {
-                  e.target.nextSibling.style.display = 'block'
-                }
-              }}
-            />
-          ) : null}
-          {logoConfig.showTextFallback && (
-            <h1 
-              className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-widest text-white text-neon"
-              style={{ display: logoConfig.url ? 'none' : 'block' }}
-            >
-              ARHAVAL
+      {/* Content Container */}
+      <div className="container mx-auto relative z-10 px-6 md:px-12 lg:px-16">
+        <div className="grid md:grid-cols-2 gap-8 items-center min-h-screen py-20">
+          {/* Left Content */}
+          <div className="space-y-8">
+            {/* Logo */}
+            {logoConfig.url && (
+              <div className="mb-8">
+                <img 
+                  src={logoConfig.url} 
+                  alt="Arhaval Esports Logo"
+                  className="object-contain"
+                  style={{ 
+                    width: logoConfig.hero?.width || 400, 
+                    height: logoConfig.hero?.height || 120,
+                    maxWidth: '100%'
+                  }}
+                  onError={(e) => {
+                    e.target.style.display = 'none'
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Main Heading */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
+              Türkiye'nin En
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary-cyan via-primary-neon to-secondary-cyan">
+                Heyecan Verici
+              </span>
+              <br />
+              Esports Platformu
             </h1>
-          )}
+
+            {/* Description */}
+            <p className="text-lg md:text-xl text-white/80 max-w-xl">
+              Profesyonel turnuvalar, canlı yayınlar ve özel içeriklerle CS2 dünyasında yeni bir deneyim.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 pt-4">
+              {heroButtons.map((button, index) => (
+                <a 
+                  key={index}
+                  href={button.link}
+                  className={`group px-8 py-4 font-bold rounded-lg transition-all duration-300 flex items-center gap-2 ${
+                    button.style === 'primary'
+                      ? 'bg-gradient-to-r from-primary-neon to-primary-neon/80 text-white hover:from-primary-neon/90 hover:to-primary-neon/70 shadow-lg shadow-primary-neon/50'
+                      : 'bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 border border-white/20'
+                  }`}
+                  style={button.style === 'primary' ? {
+                    boxShadow: '0 0 30px rgba(255, 46, 99, 0.4)'
+                  } : {}}
+                >
+                  <span>{button.text}</span>
+                  {button.style === 'primary' && (
+                    <Play size={20} className="group-hover:translate-x-1 transition-transform" />
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Side - Image Space (handled by background) */}
+          <div className="hidden md:block" />
         </div>
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-widest mb-8">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary-cyan to-primary-neon text-cyan-glow">
-            ESPORTS
-          </span>
-        </h2>
-        <p className="text-xl md:text-2xl text-white max-w-2xl mx-auto font-medium">
-          Profesyonel Esports Organizasyonu
-        </p>
       </div>
 
       {/* Fade-out Bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 gradient-fade-bottom z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-bg-dark to-transparent z-10" />
     </section>
   )
 }

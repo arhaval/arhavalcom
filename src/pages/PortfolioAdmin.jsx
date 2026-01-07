@@ -49,6 +49,10 @@ function PortfolioAdmin() {
       }
     ],
     heroBanner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1920&q=80',
+    heroButtons: [
+      { text: 'KEŞFET', link: '#about', style: 'primary' },
+      { text: 'İÇERİKLER', link: '#trcs', style: 'secondary' }
+    ],
     aboutText: `Arhaval, e-spor ekosisteminde içerik üretimi, canlı yayınlar ve turnuva organizasyonlarını tek bir çatı altında buluşturan bağımsız bir platformdur.
 
 Merkezinde Counter-Strike 2 olmak üzere, rekabetçi oyun kültürünü sadece izlenen değil, etkileşime girilen bir deneyime dönüştürmeyi hedefler.
@@ -513,7 +517,9 @@ Oyuncular, takımlar, hikâyeler, anlar ve bu anları yaşayan topluluklar vard�
           {/* Hero Banner Tab */}
           {activeTab === 'hero' && (
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-white mb-6">Hero Banner Arka Plan</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">Hero Banner Ayarları</h2>
+              
+              {/* Background Image */}
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-6">
                 <p className="text-sm text-white/80 mb-2">
                   <strong>Kendi görselinizi kullanmak için:</strong>
@@ -535,6 +541,82 @@ Oyuncular, takımlar, hikâyeler, anlar ve bu anları yaşayan topluluklar vard�
                 {portfolioData.heroBanner && (
                   <img src={portfolioData.heroBanner} alt="Hero Banner" className="mt-4 rounded-lg max-w-md" onError={(e) => e.target.style.display = 'none'} />
                 )}
+              </div>
+
+              {/* Hero Buttons */}
+              <div className="mt-8 pt-8 border-t border-white/10">
+                <h3 className="text-xl font-bold text-white mb-4">Hero Banner Butonları</h3>
+                <div className="space-y-4">
+                  {(portfolioData.heroButtons || []).map((button, index) => (
+                    <div key={index} className="glass rounded-lg p-4 border border-white/10">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-white/60 text-sm mb-2">Buton Metni</label>
+                          <input
+                            type="text"
+                            value={button.text}
+                            onChange={(e) => {
+                              const newButtons = [...(portfolioData.heroButtons || [])]
+                              newButtons[index] = { ...newButtons[index], text: e.target.value }
+                              setPortfolioData({ ...portfolioData, heroButtons: newButtons })
+                            }}
+                            placeholder="KEŞFET"
+                            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-white/60 text-sm mb-2">Link</label>
+                          <input
+                            type="text"
+                            value={button.link}
+                            onChange={(e) => {
+                              const newButtons = [...(portfolioData.heroButtons || [])]
+                              newButtons[index] = { ...newButtons[index], link: e.target.value }
+                              setPortfolioData({ ...portfolioData, heroButtons: newButtons })
+                            }}
+                            placeholder="#about veya https://..."
+                            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-white/60 text-sm mb-2">Stil</label>
+                          <select
+                            value={button.style}
+                            onChange={(e) => {
+                              const newButtons = [...(portfolioData.heroButtons || [])]
+                              newButtons[index] = { ...newButtons[index], style: e.target.value }
+                              setPortfolioData({ ...portfolioData, heroButtons: newButtons })
+                            }}
+                            className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white"
+                          >
+                            <option value="primary">Primary (Pembe)</option>
+                            <option value="secondary">Secondary (Transparan)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          const newButtons = (portfolioData.heroButtons || []).filter((_, i) => i !== index)
+                          setPortfolioData({ ...portfolioData, heroButtons: newButtons })
+                        }}
+                        className="mt-4 px-4 py-2 bg-red-500/20 text-red-400 rounded hover:bg-red-500/30 transition-colors flex items-center gap-2"
+                      >
+                        <Trash2 size={18} />
+                        Sil
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => {
+                      const newButtons = [...(portfolioData.heroButtons || []), { text: 'YENİ BUTON', link: '#', style: 'primary' }]
+                      setPortfolioData({ ...portfolioData, heroButtons: newButtons })
+                    }}
+                    className="px-4 py-2 bg-white/10 text-white rounded hover:bg-white/20 transition-colors flex items-center gap-2"
+                  >
+                    <Plus size={18} />
+                    Yeni Buton Ekle
+                  </button>
+                </div>
               </div>
             </div>
           )}
