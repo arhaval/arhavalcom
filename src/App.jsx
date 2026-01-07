@@ -410,19 +410,19 @@ Oyuncular, takımlar, hikâyeler, anlar ve bu anları yaşayan topluluklar vard�
     {
       icon: Trophy,
       title: 'Turnuva Organizasyonu',
-      description: 'Profesyonel esports turnuvaları düzenliyoruz. Her detayı mükemmelleştiriyoruz.',
+      description: 'Profesyonel ekibimiz ve turnuva sistemimiz ile espor, community ve şirketler arası turnuvalar yapmaktayız. Her detayı sizler için mükemmelleştiriyoruz.',
       glowColor: 'primary-neon'
     },
     {
       icon: Video,
-      title: 'Prodüksiyon',
-      description: 'Yüksek kaliteli yayın prodüksiyonu ile izleyicilere unutulmaz deneyimler sunuyoruz.',
+      title: 'Canlı Yayınlar',
+      description: 'Kendi turnuvalarımız ve Türk takımlarımızın maçlarını sizlere en güzel şekilde yayınlamaya çalışıyoruz. Tahmin sistemimiz ile yayınlara renk katıyoruz.',
       glowColor: 'secondary-cyan'
     },
     {
-      icon: Users,
-      title: 'Koçluk',
-      description: 'Deneyimli koçlarımızla takımlarınızı bir sonraki seviyeye taşıyoruz.',
+      icon: Play,
+      title: 'İçerikler',
+      description: 'Kendi ekibimiz ile sizlere haftanın 5 günü özel ve niş içerikler çıkartıyoruz. Tamamı sizlerin sevdiği ve takip ettiği özel içerikler olmasına özen gösteriyoruz.',
       glowColor: 'primary-neon'
     }
   ]
