@@ -341,9 +341,9 @@ const StrategicPartners = () => {
       <div className="container mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <p className="text-sm md:text-base text-white/60 font-light tracking-widest uppercase">
-            IN PARTNERSHIP WITH
-          </p>
+          <SectionTitle 
+            title="PARTNERS" 
+          />
         </div>
 
         {/* Partner Logos */}
