@@ -222,3 +222,4 @@ supabase
 
 **SONUÇ: Canlı tahmin sistemi için Supabase KESINLIKLE GEREKLİ!**
 
+

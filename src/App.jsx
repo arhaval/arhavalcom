@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, Routes, Route } from 'react-router-dom'
-import { Menu, X, Trophy, Video, Users, TrendingUp, Play, Twitch, Instagram, Twitter, Youtube, ExternalLink, Settings } from 'lucide-react'
+import { Menu, X, Trophy, Video, Users, TrendingUp, Play, Twitch, Instagram, Twitter, Youtube, ExternalLink } from 'lucide-react'
 import SectionTitle from './SectionTitle.jsx'
 import PortfolioAdmin from './pages/PortfolioAdmin.jsx'
 
@@ -103,6 +103,23 @@ const Navbar = () => {
     }
   }, [])
 
+  const handleNavClick = (e, href) => {
+    e.preventDefault()
+    const targetId = href.replace('#', '')
+    const element = document.getElementById(targetId)
+    if (element) {
+      const navbarHeight = 100 // Navbar yüksekliği
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - navbarHeight
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+      setIsMobileMenuOpen(false)
+    }
+  }
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled ? 'blur-background py-3' : 'py-6'
@@ -138,7 +155,8 @@ const Navbar = () => {
           {navbarLinks.map((link, index) => (
             <a 
               key={index}
-              href={link.href} 
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="text-white hover:text-primary-neon transition-colors font-medium"
             >
               {link.label}
@@ -146,13 +164,6 @@ const Navbar = () => {
           ))}
         </div>
         <div className="flex items-center gap-4">
-          <Link
-            to="/admin/content"
-            className="text-white/60 hover:text-primary-neon transition-colors"
-            title="Admin Panel"
-          >
-            <Settings size={20} />
-          </Link>
           <button
             className="md:hidden text-white"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -166,19 +177,13 @@ const Navbar = () => {
           {navbarLinks.map((link, index) => (
             <a 
               key={index}
-              href={link.href} 
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="block text-white hover:text-primary-neon transition-colors font-medium"
             >
               {link.label}
             </a>
           ))}
-          <Link
-            to="/admin/content"
-            className="block text-white/60 hover:text-primary-neon transition-colors font-medium flex items-center gap-2"
-          >
-            <Settings size={18} />
-            Admin Panel
-          </Link>
         </div>
       )}
     </nav>
@@ -214,6 +219,24 @@ const Hero = () => {
       { text: 'İÇERİKLER', link: '#trcs', style: 'secondary' }
     ])
   )
+
+  const handleButtonClick = (e, link) => {
+    if (link.startsWith('#')) {
+      e.preventDefault()
+      const targetId = link.replace('#', '')
+      const element = document.getElementById(targetId)
+      if (element) {
+        const navbarHeight = 100
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+        const offsetPosition = elementPosition - navbarHeight
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      }
+    }
+  }
 
   useEffect(() => {
     const loadHeroData = () => {
@@ -306,6 +329,7 @@ const Hero = () => {
                 <a 
                   key={index}
                   href={button.link}
+                  onClick={(e) => handleButtonClick(e, button.link)}
                   className={`group px-8 py-4 font-bold rounded-lg transition-all duration-300 flex items-center gap-2 ${
                     button.style === 'primary'
                       ? 'bg-gradient-to-r from-primary-neon to-primary-neon/80 text-white hover:from-primary-neon/90 hover:to-primary-neon/70 shadow-lg shadow-primary-neon/50'

@@ -126,3 +126,4 @@ Sorun yaşarsanız:
 2. Browser console'da hataları kontrol edin
 3. Build log'larını inceleyin
 
+

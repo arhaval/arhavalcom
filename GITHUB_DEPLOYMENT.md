@@ -247,3 +247,4 @@ git push
 
 Vercel otomatik olarak yeni deployment yapacak! 🚀
 
+
