@@ -53,6 +53,11 @@ function PortfolioAdmin() {
       { text: 'KEŞFET', link: '#about', style: 'primary' },
       { text: 'İÇERİKLER', link: '#trcs', style: 'secondary' }
     ],
+    contactInfo: {
+      email: 'iletisim@arhaval.com',
+      phone: '',
+      address: ''
+    },
     aboutText: `Arhaval, e-spor ekosisteminde içerik üretimi, canlı yayınlar ve turnuva organizasyonlarını tek bir çatı altında buluşturan bağımsız bir platformdur.
 
 Merkezinde Counter-Strike 2 olmak üzere, rekabetçi oyun kültürünü sadece izlenen değil, etkileşime girilen bir deneyime dönüştürmeyi hedefler.
@@ -322,6 +327,7 @@ Oyuncular, takımlar, hikâyeler, anlar ve bu anları yaşayan topluluklar vard�
               { id: 'logo', label: 'Logo', icon: Image },
               { id: 'about', label: 'Hakkımızda', icon: FileText },
               { id: 'stats', label: 'İstatistikler', icon: BarChart3 },
+              { id: 'contact', label: 'İletişim', icon: FileText },
               { id: 'navbar', label: 'Menü Linkleri', icon: LinkIcon }
             ].map((tab) => {
               const Icon = tab.icon
@@ -816,6 +822,54 @@ Oyuncular, takımlar, hikâyeler, anlar ve bu anları yaşayan topluluklar vard�
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* Contact Info Tab */}
+          {activeTab === 'contact' && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-white mb-6">İletişim Bilgileri</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-white/60 text-sm mb-2">E-posta Adresi</label>
+                  <input
+                    type="email"
+                    value={portfolioData.contactInfo?.email || ''}
+                    onChange={(e) => setPortfolioData({
+                      ...portfolioData,
+                      contactInfo: { ...portfolioData.contactInfo, email: e.target.value }
+                    })}
+                    placeholder="info@arhaval.com"
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-white/60 text-sm mb-2">Telefon (Opsiyonel)</label>
+                  <input
+                    type="tel"
+                    value={portfolioData.contactInfo?.phone || ''}
+                    onChange={(e) => setPortfolioData({
+                      ...portfolioData,
+                      contactInfo: { ...portfolioData.contactInfo, phone: e.target.value }
+                    })}
+                    placeholder="+90 XXX XXX XX XX"
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-white/60 text-sm mb-2">Adres (Opsiyonel)</label>
+                  <textarea
+                    value={portfolioData.contactInfo?.address || ''}
+                    onChange={(e) => setPortfolioData({
+                      ...portfolioData,
+                      contactInfo: { ...portfolioData.contactInfo, address: e.target.value }
+                    })}
+                    placeholder="İstanbul, Türkiye"
+                    rows={3}
+                    className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded text-white"
+                  />
+                </div>
               </div>
             </div>
           )}

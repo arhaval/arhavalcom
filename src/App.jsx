@@ -377,9 +377,9 @@ const StrategicPartners = () => {
       <div className="container mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <SectionTitle 
-            title="PARTNERS" 
-          />
+          <p className="text-sm md:text-base text-white/60 font-light tracking-widest uppercase">
+            PARTNERS
+          </p>
         </div>
 
         {/* Partner Logos */}
@@ -1004,6 +1004,11 @@ const SocialMediaHub = () => {
 const Footer = () => {
   const [socialLinks, setSocialLinks] = useState(SOCIAL_LINKS)
   const [logoConfig, setLogoConfig] = useState(() => getInitialData('logo', LOGO_CONFIG))
+  const [contactInfo, setContactInfo] = useState(() => getInitialData('contactInfo', {
+    email: 'iletisim@arhaval.com',
+    phone: '',
+    address: ''
+  }))
 
   useEffect(() => {
     const loadFooterData = () => {
@@ -1012,6 +1017,7 @@ const Footer = () => {
         try {
           const data = JSON.parse(saved)
           if (data.logo) setLogoConfig(data.logo)
+          if (data.contactInfo) setContactInfo(data.contactInfo)
           if (data.socialLinks) {
             const iconMap = {
               'Twitch': Twitch,
@@ -1043,9 +1049,11 @@ const Footer = () => {
   }, [])
 
   return (
-    <footer className="relative py-16 px-6 border-t border-white/10">
+    <footer className="relative py-12 px-6 border-t border-white/10">
       <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+        {/* Main Content */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
+          {/* Logo */}
           <div className="flex items-center gap-3">
             {logoConfig.url ? (
               <img 
@@ -1053,9 +1061,9 @@ const Footer = () => {
                 alt="Arhaval Esports Logo"
                 className="object-contain"
                 style={{ 
-                  width: logoConfig.footer?.width || 150, 
-                  height: logoConfig.footer?.height || 50,
-                  maxHeight: '50px'
+                  width: logoConfig.footer?.width || 250, 
+                  height: logoConfig.footer?.height || 80,
+                  maxHeight: '80px'
                 }}
                 onError={(e) => {
                   e.target.style.display = 'none'
@@ -1070,28 +1078,51 @@ const Footer = () => {
                 className="text-2xl font-bold tracking-wide text-primary-neon text-neon"
                 style={{ display: logoConfig.url ? 'none' : 'block' }}
               >
-                ARHAVAL ESPORTS
+                ARHAVAL
               </div>
             )}
           </div>
-          <div className="flex items-center gap-6">
-            {socialLinks.map((social, index) => {
-              const Icon = social.icon
-              return (
-                <a
-                  key={index}
-                  href={social.href}
-                  className="text-white hover:text-primary-neon transition-colors"
-                  aria-label={social.label}
-                >
-                  <Icon size={24} />
-                </a>
-              )
-            })}
+
+          {/* Contact & Social */}
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            {/* Email */}
+            {contactInfo.email && (
+              <a 
+                href={`mailto:${contactInfo.email}`}
+                className="text-white/60 hover:text-primary-neon transition-colors text-sm"
+              >
+                {contactInfo.email}
+              </a>
+            )}
+            
+            {/* Divider */}
+            <div className="hidden md:block w-px h-6 bg-white/10" />
+            
+            {/* Social Links */}
+            <div className="flex gap-4">
+              {socialLinks && socialLinks.length > 0 && socialLinks.map((social, index) => {
+                const Icon = social.icon
+                if (!Icon) return null
+                return (
+                  <a
+                    key={index}
+                    href={social.href || '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/60 hover:text-primary-neon transition-colors"
+                    aria-label={social.label}
+                  >
+                    <Icon size={20} />
+                  </a>
+                )
+              })}
+            </div>
           </div>
         </div>
-        <div className="mt-8 text-center text-white/60 text-sm font-medium">
-          <p>&copy; 2024 Arhaval Esports. Tüm hakları saklıdır.</p>
+
+        {/* Bottom Bar */}
+        <div className="pt-6 border-t border-white/10 text-center text-white/40 text-xs">
+          <p>&copy; 2025 Arhaval Esports. Tüm hakları saklıdır.</p>
         </div>
       </div>
     </footer>
